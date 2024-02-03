@@ -6,13 +6,14 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ccding/go-stun/stun"
+	"stun-test/stun"
 )
 
 func main() {
 	var serverAddr = flag.String("s", "stun.qwq.pink:3478", "STUN server address")
 	var debugMode = flag.Bool("debug", false, "debug mode")
 	var returnJson = flag.Bool("json", false, "return json")
+	var localAddr = flag.String("l", "", "Local Address")
 
 	flag.Parse()
 
@@ -22,6 +23,8 @@ func main() {
 		client.SetVerbose(true)
 		//client.SetVVerbose(true)
 	}
+
+	client.SetLocalIP(*localAddr)
 
 	nat, host, err := client.Discover()
 	if err != nil {
